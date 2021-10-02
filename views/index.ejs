@@ -1,34 +1,46 @@
+<!DOCTYPE html>
 <html lang="en">
-%-include('partials/header.ejs') %>
-
-<div id="container">
-  <div id="card">
-    <div id="title-container">
-      <h2>Olá, seja bem vindo!</h2>
-    </div>
-    <div id="form-container">
-      <label class="label">Nome</label>
-      <input
-        id="name"
-        placeholder="Digite seu nome..."
-        class="input"
-        type="text"
-      />
-      <div id="button-container">
-        <button id="button" class="button">Entrar</button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat Socket</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ruda:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <%-include('partials/header.ejs') %>
+    <div id="container">
+      <div id="card">
+        <div id="title-container">
+          <h2>Olá, seja bem vindo!</h2>
+        </div>
+        <div id="form-container">
+          <label class="label">Nome</label>
+          <input
+            id="name"
+            placeholder="Digite seu nome..."
+            class="input"
+            type="text"
+          />
+          <div id="button-container">
+            <button id="button" class="button">Entrar</button>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
 
-<%-include('partials/footer.ejs') %>
+    <%-include('partials/footer.ejs') %>
 
-<!-- Socket IO conexão -->
-<script src="/socket.io/socket.io.js"></script>
+    <!-- Socket IO conexão -->
+    <script src="/socket.io/socket.io.js"></script>
     <script>
       var socket = io();
     </script>
-</body>
+  </body>
 </html>
-
-
