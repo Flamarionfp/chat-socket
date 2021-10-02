@@ -16,5 +16,10 @@
   <body>
     <%-include('partials/header.ejs') %>
     <h2><%= name %></h2>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      var socket = io();
+    </script>
   </body>
 </html>
