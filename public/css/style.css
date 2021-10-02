@@ -106,3 +106,70 @@ a {
   text-decoration: none;
   font-weight: bold;
 }
+
+/* Chat */
+
+#messages-container {
+  height: 90%;
+  width: 90%;
+  padding: 20px 0 30px 0;
+  margin-top: 50px;
+}
+
+#messages-list {
+  list-style: none;
+}
+
+#messages-item {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  padding: 15px;
+  margin-top: 15px;
+  background-color: #f9efef;
+}
+
+#user-name {
+  font-size: 18px;
+}
+
+#message {
+  padding: 1px 0 0 10px;
+}
+
+#form {
+  background-color: #1d1b1b;
+  padding: 0.25rem;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  height: 3rem;
+  box-sizing: border-box;
+  backdrop-filter: blur(10px);
+  height: 60px;
+}
+
+#message-field {
+  border: none;
+  padding: 0 1rem;
+  flex-grow: 1;
+  border-radius: 8px;
+  margin: 0.25rem;
+}
+
+#message-field:focus {
+  outline: none;
+}
+
+#send-button {
+  cursor: pointer;
+  background: #af0015;
+  border: none;
+  padding: 0 1rem;
+  margin: 0.25rem;
+  border-radius: 3px;
+  outline: none;
+  color: #fff;
+}

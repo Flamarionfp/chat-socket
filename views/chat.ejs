@@ -15,7 +15,32 @@
   </head>
   <body>
     <%-include('partials/header.ejs') %>
-    <h2><%= name %></h2>
+    <!-- <h2><%= name %></h2> nome de usuário -->
+    <div id="container">
+      <div id="messages-container">
+        <ul id="messages-list">
+          <li id="messages-item">
+            <h5 id="user-name">João:</h5>
+            <p id="message">Oi, tudo certo?</p>
+          </li>
+
+          <li id="messages-item">
+            <h5 id="user-name">Ana:</h5>
+            <p id="message">Tudo certo, eai?</p>
+          </li>
+
+          <li id="messages-item">
+            <h5 id="user-name">João:</h5>
+            <p id="message">Que bom, tudo também?</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <form id="form" action="">
+      <input placeholder="Digite aqui..." id="message-field" autocomplete="off" />
+      <button id="send-button">Enviar</button>
+    </form>
 
     <script src="/socket.io/socket.io.js"></script>
     <script>
