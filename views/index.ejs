@@ -1,0 +1,34 @@
+<html lang="en">
+%-include('partials/header.ejs') %>
+
+<div id="container">
+  <div id="card">
+    <div id="title-container">
+      <h2>Olá, seja bem vindo!</h2>
+    </div>
+    <div id="form-container">
+      <label class="label">Nome</label>
+      <input
+        id="name"
+        placeholder="Digite seu nome..."
+        class="input"
+        type="text"
+      />
+      <div id="button-container">
+        <button id="button" class="button">Entrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%-include('partials/footer.ejs') %>
+
+<!-- Socket IO conexão -->
+<script src="/socket.io/socket.io.js"></script>
+    <script>
+      var socket = io();
+    </script>
+</body>
+</html>
+
+
