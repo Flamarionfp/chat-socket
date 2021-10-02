@@ -109,6 +109,31 @@ a {
 
 /* Chat */
 
+#nav {
+  background-color: #1d1b1b;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px;
+}
+
+#msg-user-logged {
+  color: #fff;
+  font-size: 15px;
+}
+
+#special-text {
+  color:  #af0015;
+  font-weight: bold;
+  font-size: 15px;
+}
+
+#exit-logo {
+  width: 20px;
+  height: 20px
+}
+
 #messages-container {
   height: 90%;
   width: 90%;
@@ -127,6 +152,7 @@ a {
   padding: 15px;
   margin-top: 15px;
   background-color: #f9efef;
+  border-radius: 5px;
 }
 
 #user-name {

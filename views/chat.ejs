@@ -15,6 +15,11 @@
   </head>
   <body>
     <%-include('partials/header.ejs') %>
+    <nav id="nav">
+      <p id="msg-user-logged">
+        Usuário: <span id="special-text"><%= name %></span>
+      </p>
+    </nav>
     <!-- <h2><%= name %></h2> nome de usuário -->
     <div id="container">
       <div id="messages-container">
@@ -38,7 +43,11 @@
     </div>
 
     <form id="form" action="">
-      <input placeholder="Digite aqui..." id="message-field" autocomplete="off" />
+      <input
+        placeholder="Digite aqui..."
+        id="message-field"
+        autocomplete="off"
+      />
       <button id="send-button">Enviar</button>
     </form>
 
