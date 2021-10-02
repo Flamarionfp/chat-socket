@@ -20,29 +20,25 @@
         <div id="title-container">
           <h2>Olá, seja bem vindo!</h2>
         </div>
+        <form method="GET" action="/chat">
           <div id="form-container">
             <label class="label">Nome</label>
             <input
+              name="name"
               id="name"
               placeholder="Digite seu nome..."
               class="input"
               type="text"
             />
             <div id="button-container">
-              <a href="/chat">
                 <button type="submit" id="button" class="button">Entrar</button>
-              </a>
             </div>
           </div>
-      </div>
+         </div>
+        </form>
+         
     </div>
 
     <%-include('partials/footer.ejs') %>
-
-    <!-- Socket IO conexão -->
-    <!-- <script src="/socket.io/socket.io.js"></script>
-    <script>
-      var socket = io();
-    </script> -->
   </body>
 </html>
