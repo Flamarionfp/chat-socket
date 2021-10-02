@@ -16,7 +16,9 @@ app.get("/", (req, res) => {
 });
 
 app.get("/chat", (req, res) => {
-  res.send(req.query.name);
+  res.render("chat", {
+    name: req.query.name
+  })
 });
 
 io.on("connection", (socket) => {
