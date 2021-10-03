@@ -11,36 +11,23 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Ruda:wght@400;500;600;700;800;900&display=swap"
     rel="stylesheet" />
+  
 </head>
 
 <body>
   <%-include('partials/header.ejs') %>
-    <nav id="nav">
+    <div id="nav1">
       <p id="msg-user-logged">
         Usuário: <span id="special-text">
           <%= name %>
         </span>
       </p>
-    </nav>
-    <!-- <h2><%= name %></h2> nome de usuário -->
-    <div id="container">
+    </div>
+    <div id="mostrarAlerta"></div>
+
+    <div id="container1">
       <div id="messages-container">
-        <ul id="messages-list">
-          <li id="messages-item">
-            <h5 id="user-name">João:</h5>
-            <p id="message">Oi, tudo certo?</p>
-          </li>
-
-          <li id="messages-item">
-            <h5 id="user-name">Ana:</h5>
-            <p id="message">Tudo certo, eai?</p>
-          </li>
-
-          <li id="messages-item">
-            <h5 id="user-name">João:</h5>
-            <p id="message">Que bom, tudo também?</p>
-          </li>
-        </ul>
+        <ul id="messages-list"></ul>
       </div>
     </div>
 
@@ -50,12 +37,22 @@
     </form>
 
     <script src="/socket.io/socket.io.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script>
+
+
 
       let form = document.getElementById("form");
       let input = document.getElementById("message-field");
+
       
-      let socket = io();
+
+      let socket = io({
+        query: "name=<%= name %>"
+      });
       
       form.addEventListener("submit", function (e) {
         e.preventDefault();
@@ -64,6 +61,13 @@
           input.value = "";
         }
       });
+      socket.on('newConnection', (data)=>{
+        
+      
+      })
+      socket.on('userDisconnect', (data)=>{
+        console.log(`${data} se desconectou`)
+      })
       socket.on('chat message', (data) => {
         let htmlMessage = "";
         let elementMessages = document.getElementById("messages-list");

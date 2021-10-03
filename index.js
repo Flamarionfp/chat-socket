@@ -7,35 +7,50 @@ const io = new Server(server);
 const bodyParser = require("body-parser");
 const settings = require('./config.json')
 
+let clientes = [];
+
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
-let clients = [];
 
 app.get("/", (req, res) => {
   res.render("index");
 });
 
 app.get("/chat", (req, res) => {
-  res.render("chat", {
-    name: req.query.name
-  })
+  console.log(clientes.indexOf(req.query.name) == -1)
+  if (clientes.indexOf(req.query.name) == -1) {
+    res.render("chat", {
+      name: req.query.name
+    })
+  }else{
+    res.send("Usuário já logado")
+  }
 });
 
 
 io.on('connection', (socket) => {
-  // clients.push(socket)
-  // let name = socket.handshake.query.name;
-  // clients.push({name: name})
+  let name = socket.handshake.query.name;
+  console.log(name);
+  clientes.push(name);
+
+  socket.broadcast.emit("newConnection", name)
   socket.on('chat message', (data) => {
     console.log(data)
     io.emit('chat message', data);
   });
+
+  socket.on('disconnect', () => {
+    console.log(`${name} desconectou`)
+    socket.broadcast.emit('userDisconnect', name)
+    let indice = clientes.indexOf(name);
+    clientes.slice(indice, indice);
+  })
+
 });
 
 
 server.listen(settings.portServer, settings.server, () => {
-  console.log("listening on "+settings.portServer);
+  console.log("listening on " + settings.portServer);
 });

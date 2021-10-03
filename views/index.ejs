@@ -32,8 +32,23 @@
           </div>
         </form>
       </div>
-    </div>    
+    </div>
+    
     <%-include('partials/footer.ejs') %>
+    <script>
+      $("#name").keyup((e)=>{
+          let valor = e.currentTarget.value
+          let button = $("button")
+          button.removeClass("button")
+          if(valor.length < 3){
+            button.removeClass("button")
+            button.addClass("button-disabled")
+          }
+        
+      })
+
+
+    </script>
 </body>
 
 </html>
