@@ -34,6 +34,7 @@ io.on('connection', (socket) => {
   let name = socket.handshake.query.name;
   console.log(name);
   clientes.push(name);
+  console.log(clientes)
 
   socket.broadcast.emit("newConnection", name)
   socket.on('chat message', (data) => {
@@ -51,6 +52,6 @@ io.on('connection', (socket) => {
 });
 
 
-server.listen(settings.portServer, settings.server, () => {
-  console.log("listening on " + settings.portServer);
+server.listen(3000, () => {
+  console.log("listening on " + 3000);
 });

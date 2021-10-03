@@ -1,22 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat Socket</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ruda:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Chat Socket</title>
-  <link rel="stylesheet" href="/css/style.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Ruda:wght@400;500;600;700;800;900&display=swap"
-    rel="stylesheet" />
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="/socket.io/socket.io.js"></script>
-</head>
-
-<body>
-  <%-include('partials/header.ejs') %>
+  <body>
+    <%-include('partials/header.ejs') %>
     <div id="container">
       <div id="card1" class="card">
         <div id="title-container">
@@ -24,31 +25,54 @@
         </div>
         <form id="formInitial" method="GET" action="/chat">
           <div id="form-container">
-            <label class="label">Nome</label>
-            <input name="name" id="name" placeholder="Digite seu nome..." class="input" type="text" />
+            <label class="label">Nome*</label>
+            <input
+              name="name"
+              id="name"
+              placeholder="Digite seu nome..."
+              class="input"
+              type="text"
+              autocomplete="off"
+            />
+            <p id="error-text">Insira um nome válido</p>
             <div id="button-container">
-              <button type="submit" id="button" class="button">Entrar</button>
+              <button
+                disabled
+                type="submit"
+                id="button"
+                class="button-disabled"
+              >
+                Entrar
+              </button>
             </div>
           </div>
         </form>
       </div>
     </div>
-    
+
     <%-include('partials/footer.ejs') %>
     <script>
-      $("#name").keyup((e)=>{
-          let valor = e.currentTarget.value
-          let button = $("button")
-          button.removeClass("button")
-          if(valor.length < 3){
-            button.removeClass("button")
-            button.addClass("button-disabled")
-          }
-        
-      })
+      
+      
+        let msgError = $("#error-text");
+        msgError.hide();
+   
 
-
+      $("#name").keyup((e) => {
+        let valor = e.currentTarget.value;
+        let button = $("button");
+        button.removeClass("button");
+        if (valor.length >= 3) {
+          button.removeClass("button-disabled");
+          button.addClass("button");
+          button.removeAttr("disabled");
+          msgError.hide()
+        } else {
+          button.addClass("button-disabled");
+          button.attr("disabled", true);
+          msgError.show()
+        }
+      });
     </script>
-</body>
-
+  </body>
 </html>
