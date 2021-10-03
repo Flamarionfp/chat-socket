@@ -1,26 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat Socket</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ruda:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Chat Socket</title>
-  <link rel="stylesheet" href="/css/style.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Ruda:wght@400;500;600;700;800;900&display=swap"
-    rel="stylesheet" />
-  
-</head>
-
-<body>
-  <%-include('partials/header.ejs') %>
+  <body>
+    <%-include('partials/header.ejs') %>
     <div id="nav1">
       <p id="msg-user-logged">
-        Usuário: <span id="special-text">
-          <%= name %>
-        </span>
+        Usuário: <span id="special-text"> <%= name %> </span>
       </p>
     </div>
     <div id="mostrarAlerta"></div>
@@ -32,65 +30,84 @@
     </div>
 
     <form id="form" action="">
-      <input placeholder="Digite aqui..." id="message-field" autocomplete="off" />
+      <input
+        placeholder="Digite aqui..."
+        id="message-field"
+        autocomplete="off"
+      />
       <button id="send-button">Enviar</button>
     </form>
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
     <script>
-
-
-
       let form = document.getElementById("form");
       let input = document.getElementById("message-field");
 
-      
-
       let socket = io({
-        query: "name=<%= name %>"
+        query: "name=<%= name %>",
       });
-      
+
       form.addEventListener("submit", function (e) {
         e.preventDefault();
         if (input.value) {
-          socket.emit("chat message", {name: "<%= name %>", msg: input.value});
+          socket.emit("chat message", {
+            name: "<%= name %>",
+            msg: input.value,
+          });
           input.value = "";
         }
       });
-      socket.on('newConnection', (data)=>{
-        
-      
-      })
-      socket.on('userDisconnect', (data)=>{
-        console.log(`${data} se desconectou`)
-      })
-      socket.on('chat message', (data) => {
+
+      let elementMessages = document.getElementById("messages-list");
+
+      socket.on("newConnection", (data) => {});
+      socket.on("userDisconnect", (data) => {
+        console.log(`${data} se desconectou`);
+        let desconectionMessage = `
+        <div id="eventContainer">
+          <span id="special-text">${data}</span>
+          <p id="eventMessage">saiu da conversa</p>
+        </div>
+        `;
+        elementMessages.innerHTML += desconectionMessage;
+      });
+
+      socket.on("chat message", (data) => {
         let htmlMessage = "";
-        let elementMessages = document.getElementById("messages-list");
-        if("<%= name %>" == data.name){
-          htmlMessage = 
-          `
+
+        if ("<%= name %>" == data.name) {
+          htmlMessage = `
         <li id="messages-item">
             <h5 id="user-name">Você: </h5>
             <p id="message">${data.msg}</p>
           </li>
-        `
-        }else{
-
+        `;
+        } else {
           htmlMessage = `
         <li id="messages-item">
             <h5 id="user-name">${data.name}:</h5>
             <p id="message">${data.msg}</p>
           </li>
-        `
+        `;
         }
-        elementMessages.innerHTML += htmlMessage
-      })
+        elementMessages.innerHTML += htmlMessage;
+      });
     </script>
-</body>
-
+  </body>
 </html>

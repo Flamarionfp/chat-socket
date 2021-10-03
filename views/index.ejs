@@ -52,11 +52,8 @@
 
     <%-include('partials/footer.ejs') %>
     <script>
-      
-      
-        let msgError = $("#error-text");
-        msgError.hide();
-   
+      let msgError = $("#error-text");
+      msgError.hide();
 
       $("#name").keyup((e) => {
         let valor = e.currentTarget.value;
@@ -66,11 +63,11 @@
           button.removeClass("button-disabled");
           button.addClass("button");
           button.removeAttr("disabled");
-          msgError.hide()
+          msgError.hide();
         } else {
           button.addClass("button-disabled");
           button.attr("disabled", true);
-          msgError.show()
+          msgError.show();
         }
       });
     </script>

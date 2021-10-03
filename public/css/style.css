@@ -181,6 +181,17 @@ a {
   padding: 1px 0 0 10px;
 }
 
+#eventContainer{
+  display: flex;
+  flex-direction: row;
+  margin-top: 15px;
+  margin-left: 25px;
+}
+
+#eventMessage {
+  padding-left: 5px;
+}
+
 #form {
   background-color: #1d1b1b;
   padding: 0.25rem;
