@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chat Socket</title>
-    <link rel="stylesheet" href="/css/style.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Ruda:wght@400;500;600;700;800;900&display=swap"
-      rel="stylesheet"
-    />
-  </head>
-  <body>
-    <%-include('partials/header.ejs') %>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chat Socket</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Ruda:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet" />
+</head>
+
+<body>
+  <%-include('partials/header.ejs') %>
     <nav id="nav">
       <p id="msg-user-logged">
-        Usuário: <span id="special-text"><%= name %></span>
+        Usuário: <span id="special-text">
+          <%= name %>
+        </span>
       </p>
     </nav>
     <!-- <h2><%= name %></h2> nome de usuário -->
@@ -43,28 +45,48 @@
     </div>
 
     <form id="form" action="">
-      <input
-        placeholder="Digite aqui..."
-        id="message-field"
-        autocomplete="off"
-      />
+      <input placeholder="Digite aqui..." id="message-field" autocomplete="off" />
       <button id="send-button">Enviar</button>
     </form>
 
     <script src="/socket.io/socket.io.js"></script>
     <script>
-      let socket = io();
 
       let form = document.getElementById("form");
       let input = document.getElementById("message-field");
-
+      
+      let socket = io();
+      
       form.addEventListener("submit", function (e) {
         e.preventDefault();
         if (input.value) {
-          socket.emit("chat message", input.value);
+          socket.emit("chat message", {name: "<%= name %>", msg: input.value});
           input.value = "";
         }
       });
+      socket.on('chat message', (data) => {
+        let htmlMessage = "";
+        let elementMessages = document.getElementById("messages-list");
+        if("<%= name %>" == data.name){
+          htmlMessage = 
+          `
+        <li id="messages-item">
+            <h5 id="user-name">Você: </h5>
+            <p id="message">${data.msg}</p>
+          </li>
+        `
+        }else{
+
+          htmlMessage = `
+        <li id="messages-item">
+            <h5 id="user-name">${data.name}:</h5>
+            <p id="message">${data.msg}</p>
+          </li>
+        `
+        }
+        elementMessages.innerHTML += htmlMessage
+      })
     </script>
-  </body>
+</body>
+
 </html>

@@ -32,7 +32,7 @@ header {
   height: 70vh;
 }
 
-#card {
+.card {
   border-radius: 8px;
   flex-direction: column;
   width: 35%;

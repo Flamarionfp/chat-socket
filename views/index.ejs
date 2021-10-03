@@ -1,42 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chat Socket</title>
-    <link rel="stylesheet" href="/css/style.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Ruda:wght@400;500;600;700;800;900&display=swap"
-      rel="stylesheet"
-    />
-  </head>
-  <body>
-    <%-include('partials/header.ejs') %>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chat Socket</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Ruda:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+</head>
+
+<body>
+  <%-include('partials/header.ejs') %>
     <div id="container">
-      <div id="card">
+      <div id="card1" class="card">
         <div id="title-container">
           <h2>Olá, seja bem vindo!</h2>
         </div>
-        <form method="GET" action="/chat">
+        <form id="formInitial" method="GET" action="/chat">
           <div id="form-container">
             <label class="label">Nome</label>
-            <input
-              name="name"
-              id="name"
-              placeholder="Digite seu nome..."
-              class="input"
-              type="text"
-            />
+            <input name="name" id="name" placeholder="Digite seu nome..." class="input" type="text" />
             <div id="button-container">
-                <button type="submit" id="button" class="button">Entrar</button>
+              <button type="submit" id="button" class="button">Entrar</button>
             </div>
           </div>
-         </div>
         </form>
-    </div>
+      </div>
+    </div>    
     <%-include('partials/footer.ejs') %>
-  </body>
+</body>
+
 </html>

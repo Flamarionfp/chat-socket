@@ -5,11 +5,14 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 const bodyParser = require("body-parser");
+const settings = require('./config.json')
 
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+let clients = [];
 
 app.get("/", (req, res) => {
   res.render("index");
@@ -23,12 +26,16 @@ app.get("/chat", (req, res) => {
 
 
 io.on('connection', (socket) => {
-  socket.on('chat message', (msg) => {
-    console.log('message: ' + msg);
+  // clients.push(socket)
+  // let name = socket.handshake.query.name;
+  // clients.push({name: name})
+  socket.on('chat message', (data) => {
+    console.log(data)
+    io.emit('chat message', data);
   });
 });
 
 
-server.listen(3000, () => {
-  console.log("listening on *:3000");
+server.listen(settings.portServer, settings.server, () => {
+  console.log("listening on "+settings.portServer);
 });
