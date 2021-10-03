@@ -72,6 +72,6 @@ function removeAllClients() {
   }
 }
 
-server.listen(settings.portServer, () => {
+server.listen(settings.portServer, settings.server, () => {
   console.log("listening on " + settings.portServer);
 });
