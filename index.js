@@ -31,7 +31,7 @@ app.get("/chat", (req, res) => {
 
 io.on("connection", (socket) => {
   let name = socket.handshake.query.name;
-  console.log(name);
+  console.log(`${name} conectou`);
   clientes.push(name);
   console.log(clientes);
 
@@ -46,8 +46,9 @@ io.on("connection", (socket) => {
     console.log(`${name} desconectou`);
     socket.broadcast.emit("userDisconnect", name);
     let indiceName = clientes.indexOf(name);
-    console.log(indiceName)
+    console.log(`Posição de quem saiu em clientes: ${indiceName}`)
     clientes.splice(indiceName, indiceName);
+    console.log(clientes);
   });
 });
 
@@ -59,7 +60,6 @@ function removeAllClients() {
     x++;
   }
 }
-console.log(clientes);
 
 server.listen(3000, () => {
   console.log("listening on " + 3000);
