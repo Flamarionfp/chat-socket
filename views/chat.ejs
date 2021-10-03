@@ -58,6 +58,8 @@
     <script>
       let form = document.getElementById("form");
       let input = document.getElementById("message-field");
+      let elementMessages = document.getElementById("messages-list");
+      let eventMsg = ``
 
       let socket = io({
         query: "name=<%= name %>",
@@ -74,18 +76,27 @@
         }
       });
 
-      let elementMessages = document.getElementById("messages-list");
 
-      socket.on("newConnection", (data) => {});
+      socket.on("newConnection", (name) => {
+        eventMsg = `
+        <div id="eventContainer">
+          <span id="special-text">${name}</span>
+          <p id="eventMessage">entrou na conversa</p>
+        </div>
+        `;
+        elementMessages.innerHTML += eventMsg;
+      });
+
+
       socket.on("userDisconnect", (data) => {
         console.log(`${data} se desconectou`);
-        let desconectionMessage = `
+        eventMsg = `
         <div id="eventContainer">
           <span id="special-text">${data}</span>
           <p id="eventMessage">saiu da conversa</p>
         </div>
         `;
-        elementMessages.innerHTML += desconectionMessage;
+        elementMessages.innerHTML += eventMsg;
       });
 
       socket.on("chat message", (data) => {

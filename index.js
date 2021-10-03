@@ -37,6 +37,7 @@ io.on('connection', (socket) => {
   console.log(clientes)
 
   socket.broadcast.emit("newConnection", name)
+  
   socket.on('chat message', (data) => {
     console.log(data)
     io.emit('chat message', data);
@@ -48,7 +49,6 @@ io.on('connection', (socket) => {
     let indice = clientes.indexOf(name);
     clientes.slice(indice, indice);
   })
-
 });
 
 
