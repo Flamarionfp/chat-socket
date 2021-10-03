@@ -4,7 +4,7 @@
   "description": "sistema de chat usando a lib socket io",
   "main": "index.js",
   "scripts": {
-      "start": "nodemon index.js"
+      "start": "node index.js"
   },
   "author": "eduardo meurer e flamarion fagundes",
   "license": "ISC",
