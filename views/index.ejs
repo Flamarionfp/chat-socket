@@ -21,12 +21,13 @@
     <div id="container">
       <div id="card1" class="card">
         <div id="title-container">
-          <h2>Olá, seja bem vindo!</h2>
+          <h2 id="welcome-text">Olá, seja bem vindo!</h2>
         </div>
         <form id="formInitial" method="GET" action="/chat">
           <div id="form-container">
             <label class="label">Nome*</label>
             <input
+              maxlength="30"
               name="name"
               id="name"
               placeholder="Digite seu nome..."
@@ -44,6 +45,11 @@
               >
                 Entrar
               </button>
+              <% if (msg != "") { %>
+                <div id="user-already-logged-container">
+                  <p id="user-already-logged"><%= msg %></p>
+                </div>
+              <% } %>
             </div>
           </div>
         </form>

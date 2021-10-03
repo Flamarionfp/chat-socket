@@ -20,23 +20,31 @@
       <p id="msg-user-logged">
         Usuário: <span id="special-text"> <%= name %> </span>
       </p>
+      <div id="exit-container">
+        <a href="/">
+          <span id="special-text">SAIR</span>
+        </a>
+      </div>
     </div>
     <div id="mostrarAlerta"></div>
 
     <div id="container1">
-      <div id="messages-container">
+      
         <ul id="messages-list"></ul>
-      </div>
-    </div>
+        <div class="spacing-scroll"></div>
+      
+    
 
     <form id="form" action="">
       <input
+        maxlength="4096"
         placeholder="Digite aqui..."
         id="message-field"
         autocomplete="off"
       />
       <button id="send-button">Enviar</button>
     </form>
+  </div>
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -104,16 +112,24 @@
 
         if ("<%= name %>" == data.name) {
           htmlMessage = `
-        <li id="messages-item">
-            <h5 id="user-name">Você: </h5>
-            <p id="message">${data.msg}</p>
+        <li id="messages-item" class="right-message">
+            <div>
+              <h5 id="user-name">Você: </h5>
+              <div>
+                <p id="message">${data.msg}</p>
+              </div>
+            </div>
           </li>
         `;
         } else {
           htmlMessage = `
         <li id="messages-item">
+          <div>
             <h5 id="user-name">${data.name}:</h5>
-            <p id="message">${data.msg}</p>
+            <div>
+              <p id="message">${data.msg}</p>
+            </div>
+          </div>
           </li>
         `;
         }

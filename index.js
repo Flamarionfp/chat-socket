@@ -9,33 +9,45 @@ const settings = require("./config.json");
 
 let clientes = [];
 
+function isClientLogged(name){
+  return clientes.indexOf(name) >= 0
+}
+
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
-  res.render("index");
+  res.render("index", {msg: ''});
 });
 
 app.get("/chat", (req, res) => {
   console.log(clientes.indexOf(req.query.name) == -1);
-  if (clientes.indexOf(req.query.name) == -1) {
+  if (!isClientLogged(req.query.name)) {
     res.render("chat", {
       name: req.query.name,
     });
   } else {
-    res.send("Usuário já logado");
+    res.render('index', {
+      msg: 'Usuário já logado!'
+    })
   }
 });
 
 io.on("connection", (socket) => {
   let name = socket.handshake.query.name;
-  console.log(`${name} conectou`);
-  clientes.push(name);
+  
+  if(!isClientLogged(name)){
+    clientes.push(name);
+    console.log(`${name} conectou`);
+    socket.broadcast.emit("newConnection", name);
+  }else{
+    socket.disconnect(true);
+  }
   console.log(clientes);
 
-  socket.broadcast.emit("newConnection", name);
+  
 
   socket.on("chat message", (data) => {
     console.log(data);
@@ -46,8 +58,7 @@ io.on("connection", (socket) => {
     console.log(`${name} desconectou`);
     socket.broadcast.emit("userDisconnect", name);
     let indiceName = clientes.indexOf(name);
-    console.log(`Posição de quem saiu em clientes: ${indiceName}`)
-    clientes.splice(indiceName, indiceName);
+    clientes.splice(indiceName, 1);
     console.log(clientes);
   });
 });
@@ -61,6 +72,6 @@ function removeAllClients() {
   }
 }
 
-server.listen(3000, () => {
-  console.log("listening on " + 3000);
+server.listen(settings.portServer, settings.server, () => {
+  console.log("listening on " + settings.portServer);
 });
