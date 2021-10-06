@@ -51,6 +51,10 @@
 
     <div style="display: none" id="modal-users">
       <h2>Usuários online:</h2>
+        <div id="clients-container">
+          <ul id="users-online-list">
+        </div>
+      </ul>
     </div>
 
     <div style="display: none" id="modal-commands">
@@ -95,7 +99,9 @@
       let form = document.getElementById("form");
       let input = document.getElementById("message-field");
       let elementMessages = document.getElementById("messages-list");
+      let usersOnlineList = document.getElementById("users-online-list")
       let eventMsg = ``;
+      let usersOnlineText = ``;
 
       let comands = {
         exit: "/exit",
@@ -134,6 +140,16 @@
         `;
         elementMessages.innerHTML += eventMsg;
       });
+
+      socket.on("online-users", (clientes) =>{
+        console.log(clientes)
+        usersOnlineText = `
+        <div id="clients-container">
+          <li id="clients-online-li">${clientes}</li>
+        <div> 
+        `;
+        usersOnlineList.innerHTML += usersOnlineText;
+      })
 
       socket.on("userDisconnect", (data) => {
         console.log(`${data} se desconectou`);

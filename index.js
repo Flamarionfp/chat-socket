@@ -42,6 +42,7 @@ io.on("connection", (socket) => {
     clientes.push(name);
     console.log(`${name} conectou`);
     socket.broadcast.emit("newConnection", name);
+    socket.emit("online-users", clientes);
   }else{
     socket.disconnect(true);
   }
