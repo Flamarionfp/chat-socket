@@ -26,6 +26,12 @@
         </a>
       </div>
     </div>
+    <div id="key-command-info">
+      <p id="see-commands-msg">ver comandos: </p>
+      <span id="special-text">/key>
+      
+    </div>
+   
     <div id="mostrarAlerta"></div>
 
     <div id="container1">
@@ -43,8 +49,22 @@
       </form>
     </div>
 
-    <div style="display: none" id="modal">
-      <h2>Usuários online</h2>
+    <div style="display: none" id="modal-users">
+      <h2>Usuários online:</h2>
+    </div>
+
+    <div style="display: none" id="modal-commands">
+      <h2>Comandos:</h2>
+      <div id="commands-container">
+        <div id="command-row">
+          <p id="command-description">sair:</p>
+          <span id="special-text">/exit</span>
+        </div>
+        <div id="command-row">
+          <p id="command-description">ver usuários online:</p>
+          <span id="special-text">/list</span>
+        </div>
+      </div>
     </div>
 
     <script src="/socket.io/socket.io.js"></script>
@@ -80,6 +100,7 @@
       let comands = {
         exit: "/exit",
         list: "/list",
+        key: "/key",
       };
 
       let socket = io({
@@ -91,13 +112,11 @@
 
         if (input.value === comands.exit) {
           window.location.href = "/";
-        }
-
-        else if (input.value === comands.list) {
-          $('#modal').modal('show');
-        }
-
-        else if (input.value) {
+        } else if (input.value === comands.list) {
+          $("#modal-users").modal("show");
+        } else if (input.value === comands.key) {
+          $("#modal-commands").modal("show");
+        } else if (input.value) {
           socket.emit("chat message", {
             name: "<%= name %>",
             msg: input.value,
