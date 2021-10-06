@@ -69,6 +69,11 @@
       let elementMessages = document.getElementById("messages-list");
       let eventMsg = ``
 
+      let comands = {
+        exit: '/exit',
+        list: '/list'
+      }
+
       let socket = io({
         query: "name=<%= name %>",
       });
@@ -76,7 +81,7 @@
       form.addEventListener("submit", function (e) {
         e.preventDefault();
 
-        if(input.value === '/exit'){
+        if(input.value === comands.exit){
           console.log('quis sair')
           window.location.href = "/";
         }
