@@ -75,6 +75,12 @@
 
       form.addEventListener("submit", function (e) {
         e.preventDefault();
+
+        if(input.value === '/exit'){
+          console.log('quis sair')
+          window.location.href = "/";
+        }
+
         if (input.value) {
           socket.emit("chat message", {
             name: "<%= name %>",
