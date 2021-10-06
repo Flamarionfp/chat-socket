@@ -102,6 +102,7 @@
       let usersOnlineList = document.getElementById("users-online-list")
       let eventMsg = ``;
       let usersOnlineText = ``;
+      let users = [];
 
       let comands = {
         exit: "/exit",
@@ -119,6 +120,7 @@
         if (input.value === comands.exit) {
           window.location.href = "/";
         } else if (input.value === comands.list) {
+          listaClientes()
           $("#modal-users").modal("show");
         } else if (input.value === comands.key) {
           $("#modal-commands").modal("show");
@@ -141,14 +143,17 @@
         elementMessages.innerHTML += eventMsg;
       });
 
+      function listaClientes(){
+        usersOnlineList.innerHTML = ''
+        users.forEach((user) => {
+          usersOnlineList.innerHTML += `<li id="clients-online-li">${user.toString()}</li>`
+        })
+      }
+
       socket.on("online-users", (clientes) =>{
         console.log(clientes)
-        usersOnlineText = `
-        <div id="clients-container">
-          <li id="clients-online-li">${clientes}</li>
-        <div> 
-        `;
-        usersOnlineList.innerHTML += usersOnlineText;
+        users = clientes
+        listaClientes()
       })
 
       socket.on("userDisconnect", (data) => {
@@ -160,6 +165,9 @@
         </div>
         `;
         elementMessages.innerHTML += eventMsg;
+        let indiceUserDisconect = users.indexOf(data);
+        users.splice(indiceUserDisconect, 1)
+        listaClientes()
       });
 
       socket.on("chat message", (data) => {

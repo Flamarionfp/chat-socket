@@ -183,20 +183,19 @@ a {
   padding-right: 5px;
 }
 
-#users-online-list {
-  display: flex;
-  flex-direction: column;
+#users-online-list{
+  margin-top: 20px;
+}
+
+#clients-online-li {
   margin: 0;
-  padding: 27px 0 36px 25px;
+  margin-bottom: 5px;
+  padding-left: 20px;
   list-style: none;
   background-image: url("https://icons.iconarchive.com/icons/franksouza183/fs/512/Status-tray-online-icon.png");
   background-repeat: no-repeat;
   background-position: left center;
   background-size: 15px;
-}
-
-#clients-container {
-  margin-top: 10px;
 }
 
 .spacing-scroll {
