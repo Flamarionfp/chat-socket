@@ -8,8 +8,6 @@ const bodyParser = require("body-parser");
 const settings = require("./config.json");
 require("dotenv").config();
 
-const { PORT_SERVER } = process.env;
-
 let clientes = [];
 
 function isClientLogged(name) {
@@ -61,6 +59,6 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(PORT_SERVER, () => {
-  console.log(`Listening on ${PORT_SERVER}`);
+server.listen(process.env.PORT || 3000, () => {
+  console.log(`Listening...`);
 });
